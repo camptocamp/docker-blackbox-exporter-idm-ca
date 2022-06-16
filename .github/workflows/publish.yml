@@ -1,0 +1,31 @@
+name: publish
+ 
+on:
+  push:
+    tags:        
+      - '*'
+
+env:
+  APP_NAME: blackbox-exporter-idm-ca
+
+jobs:
+  dagger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v2
+
+      - name: Parse version from git tag
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
+      - name: Publish to Ghcr
+        uses: dagger/dagger-for-github@v3
+        with:
+          version: 0.2
+          cmds: |
+            project update
+            do publish
+        env:
+          REGISTRY_USER: ${{ github.event.push.user.login }}
+          REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_VERSION: ${{ env.RELEASE_VERSION }}

@@ -1,0 +1,41 @@
+---
+modules:
+  http_2xx:
+    prober: http
+    timeout: 20s
+    http:
+      preferred_ip_protocol: ip4
+      headers:
+        User-Agent: prometheus-blackbox-exporter
+  http_401:
+    prober: http
+    timeout: 20s
+    http:
+      preferred_ip_protocol: ip4
+      valid_status_codes:
+      - 401
+      headers:
+        User-Agent: prometheus-blackbox-exporter
+  http_2xx_with_idm_ca:
+    prober: http
+    timeout: 20s
+    http:
+      preferred_ip_protocol: ip4
+      headers:
+        User-Agent: prometheus-blackbox-exporter
+      tls_config:
+        ca_file: "/usr/local/share/ca-certificates/idm.c2c.com-ca.crt"
+  dns_idm_soa:
+    prober: dns
+    timeout: 5s
+    dns:
+      preferred_ip_protocol: ip4
+      query_name: idm.camptocamp.com
+      query_type: SOA
+  tcp_tls_with_idm_ca:
+    prober: tcp
+    timeout: 20s
+    tcp:
+      tls: true
+      tls_config:
+        ca_file: "/usr/local/share/ca-certificates/idm.c2c.com-ca.crt"
