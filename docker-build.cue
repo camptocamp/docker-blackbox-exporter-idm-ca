@@ -25,7 +25,7 @@ dagger.#Plan & {
         dest:  "ghcr.io/camptocamp/blackbox-exporter-idm-ca:\(client.env.RELEASE_VERSION)"
         auth: {
           username: client.env.REGISTRY_USER
-          secret:   client.env.REGISTRY_PASS
+          secret:   client.env.REGISTRY_TOKEN
         }
       }
     }

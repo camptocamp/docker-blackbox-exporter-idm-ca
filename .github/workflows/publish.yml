@@ -24,8 +24,7 @@ jobs:
           version: 0.2
           cmds: |
             project update
-            do publish
+            do publish -l debug
         env:
-          REGISTRY_USER: ${{ github.event.push.user.login }}
+          REGISTRY_USER: ${{ github.actor }}
           REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RELEASE_VERSION: ${{ env.RELEASE_VERSION }}
