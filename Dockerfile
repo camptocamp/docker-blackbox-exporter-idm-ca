@@ -1,11 +1,14 @@
-ARG ARCH="amd64"
-ARG OS="linux"
-FROM quay.io/prometheus/busybox-${OS}-${ARCH}:latest
+FROM alpine:3.16.0
 
-COPY bin/blackbox_exporter  /bin/blackbox_exporter
-COPY config/blackbox_server.yml       /etc/blackbox_exporter/config.yml
-COPY ca/idm-ca.crt       /usr/local/share/ca-certificates/idm.c2c.com-ca.crt
+RUN apk add --no-cache gettext
 
-EXPOSE      9115
-ENTRYPOINT  [ "/bin/blackbox_exporter" ]
-CMD         [ "--config.file=/etc/blackbox_exporter/config.yml" ]
+COPY bin/blackbox_exporter /bin/blackbox_exporter
+COPY config/blackbox_server.yml /etc/blackbox_exporter/config.yml
+COPY ca/idm-ca.crt /usr/local/share/ca-certificates/idm.c2c.com-ca.crt
+COPY config/blackbox_server_web.yml ./config_web.yml
+COPY launch.sh ./
+
+RUN chmod +x ./launch.sh
+
+EXPOSE 9115
+CMD ["./launch.sh"]
