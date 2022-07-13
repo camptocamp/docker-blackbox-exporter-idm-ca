@@ -1,5 +1,7 @@
 #!/bin/sh
 
+mkdir /etc/blackbox_exporter/
+
 rm /etc/blackbox_exporter/config_web.yml || :
 envsubst < config.yml > /etc/blackbox_exporter/config.yml
 
