@@ -8,6 +8,36 @@ modules:
       headers:
         User-Agent: prometheus-blackbox-exporter
 
+  http_2xx_with_idm_ca:
+    prober: http
+    timeout: 20s
+    http:
+      preferred_ip_protocol: ip4
+      headers:
+        User-Agent: prometheus-blackbox-exporter
+      tls_config:
+        ca_file: "/usr/local/share/ca-certificates/idm.c2c.com-ca.crt"
+
+  http_2xx_with_basic_auth_geo2france:
+    prober: http
+    timeout: 20s
+    http:
+      preferred_ip_protocol: ip4
+      headers:
+        User-Agent: prometheus-blackbox-exporter
+      basic_auth:
+        username: ${GEO2FRANCE_BASIC_AUTH_USERNAME}
+        password: ${GEO2FRANCE_BASIC_AUTH_PASSWORD}
+
+  http_3xx:
+    prober: http
+    timeout: 20s
+    http:
+      preferred_ip_protocol: ip4
+      valid_status_codes: [300,301,302,303,304,305,306,307,308]
+      headers:
+        User-Agent: prometheus-blackbox-exporter
+
   http_401:
     prober: http
     timeout: 20s
@@ -29,27 +59,6 @@ modules:
         User-Agent: prometheus-blackbox-exporter
       tls_config:
         ca_file: "/usr/local/share/ca-certificates/idm.c2c.com-ca.crt"
-
-  http_2xx_with_idm_ca:
-    prober: http
-    timeout: 20s
-    http:
-      preferred_ip_protocol: ip4
-      headers:
-        User-Agent: prometheus-blackbox-exporter
-      tls_config:
-        ca_file: "/usr/local/share/ca-certificates/idm.c2c.com-ca.crt"
-
-  http_2xx_with_basic_auth_geo2france:
-    prober: http
-    timeout: 20s
-    http:
-      preferred_ip_protocol: ip4
-      headers:
-        User-Agent: prometheus-blackbox-exporter
-      basic_auth:
-        username: ${GEO2FRANCE_BASIC_AUTH_USERNAME}
-        password: ${GEO2FRANCE_BASIC_AUTH_PASSWORD}
 
   dns_idm_soa:
     prober: dns
